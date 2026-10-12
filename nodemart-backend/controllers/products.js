@@ -1,5 +1,5 @@
 const Product = require("../models/Product");
-
+const uploadImage = require('../utils/uploadImage');
 exports.getProducts = async (req, res) => {
   try {
     const page = Math.max(Number.parseInt(req.query.page) || 1, 1);
@@ -86,7 +86,7 @@ exports.getMyProducts = async (req, res) => {
 exports.createProduct = async (req, res) => {
   try {
     const { title, price } = req.body;
-    const image = req.file ? `/uploads/${req.file.filename}` : '';
+    const image = req.file ? await uploadImage(req.file.buffer) : '';
     const newProduct = await Product.create({
       title,
       price,

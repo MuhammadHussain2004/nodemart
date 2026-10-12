@@ -1,21 +1,21 @@
 const multer = require('multer')
-const path= require('path')
-const crypto = require('node:crypto')
+// const path= require('path')
+// const crypto = require('node:crypto')
 
-const storage = multer.diskStorage({
+// const storage = multer.diskStorage({
 
-    destination: (req, file , callback) =>{
-        callback(null, 'uploads/');
-    },
+//     destination: (req, file , callback) =>{
+//         callback(null, 'uploads/');
+//     },
 
-     filename: (req, file, callback) =>{
-        const extension = path.extname(file.originalname).toLowerCase();
+//      filename: (req, file, callback) =>{
+//         const extension = path.extname(file.originalname).toLowerCase();
 
-        const uniqueFileName = `product-${Date.now()}-${crypto.randomUUID()}${extension}`;
+//         const uniqueFileName = `product-${Date.now()}-${crypto.randomUUID()}${extension}`;
 
-         callback(null, uniqueFileName);
-     }
-});
+//          callback(null, uniqueFileName);
+//      }
+// });
 
 const fileFilter = (req, file , callback) => {
     if(file.mimetype.startsWith('image/')){
@@ -27,10 +27,10 @@ const fileFilter = (req, file , callback) => {
 }
 
 const upload= multer({
-    storage,
+    storage: multer.memoryStorage(),
     fileFilter,
     limits: {
-        fileSize: 5 * 1024 * 1024
+        fileSize: 4 * 1024 * 1024
     }
 });
 
